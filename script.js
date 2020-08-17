@@ -1,5 +1,10 @@
 // Declaring Variables
 var colours = ["red", "blue", "green", "yellow"]
+var redSound = new Audio("sounds/red.mp3");
+var blueSound = new Audio("sounds/blue.mp3");
+var greenSound = new Audio("sounds/green.mp3");
+var yellowSound = new Audio("sounds/yellow.mp3");
+var wrongSound = new Audio("sounds/wrong.mp3");
 var gamePattern = [];
 var userPattern = [];
 var gameStarted = false;
@@ -35,8 +40,30 @@ function newLevel() {
 }
 
 function playSound(name) { // PLAY THE AUDIO OF ANY mp3 FILE IN THE RELATIVE SOUND FOLDER
-    let audio = new Audio("sounds/" + name + ".mp3");
-    audio.play();
+    switch (name) {
+        case "red":
+            redSound.currentTime = 0;
+            redSound.play();
+            break;
+        case "blue":
+            blueSound.currentTime = 0;
+            blueSound.play();
+            break;
+        case "green":
+            greenSound.currentTime = 0;
+            greenSound.play();
+            break;
+        case "yellow":
+            yellowSound.currentTime = 0;
+            yellowSound.play();
+            break;
+        case "wrong":
+            wrongSound.currentTime = 0;
+            wrongSound.play();
+            break;
+        default:
+            break;
+    }  
 }
 
 function checkUserSequence (userColour) {
@@ -69,11 +96,11 @@ function nextSequence() {
     // REVEAL NEW SEQUENCE COLOUR TO USER
     setTimeout(function () {
         $("#" + colour).fadeOut(125).fadeIn(125);
+        playSound(colour); // PLAYING BUTTON CLICK SOUND
     }, 1000);
-    playSound(colour); // PLAYING BUTTON CLICK SOUND
 }
 
-function gameOver() {
+function gameOver() { // SET gameStarted TO FALSE AND EMPTY gamePattern
     $("body").addClass("game-over");
     setTimeout(function () {
         $("body").removeClass("game-over");
@@ -81,7 +108,6 @@ function gameOver() {
     $("#level-title").text("Game Over, Press Any Key to Restart");
     playSound("wrong");
     gamePattern = [];
-    userPattern = [];
     gameStarted = false;
 }
     
